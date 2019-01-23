@@ -43,7 +43,7 @@ func (h *Handler) AuthRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.webhooksClient.Create(ctx, resp.AccessToken, resp.TeamID, resp.IncomingWebhook.URL, resp.IncomingWebhook.ChannelID)
+	err = h.webhooksClient.Create(ctx, resp.AccessToken, resp.TeamID, resp.TeamName, resp.IncomingWebhook.URL, resp.IncomingWebhook.ChannelID)
 	if err != nil {
 		fmt.Println("error creating webhook", err)
 		w.WriteHeader(http.StatusInternalServerError)

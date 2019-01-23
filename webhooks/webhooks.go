@@ -9,7 +9,7 @@ import (
 const (
 	allWebhooksQuery = "SELECT webhook FROM webhooks"
 
-	insertQuery = "INSERT INTO webhooks (webhook, access_token, team_id, channel_id) VALUES ($1, $2, $3, $4) ON CONFLICT (team_id) DO NOTHING"
+	insertQuery = "INSERT INTO webhooks (webhook, access_token, team_id, channel_id, team_name) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (team_id) DO NOTHING"
 )
 
 type Client struct {
@@ -22,8 +22,8 @@ func New(db *sql.DB) *Client {
 	}
 }
 
-func (c *Client) Create(ctx context.Context, accessToken string, teamID string, webhook string, channelID string) error {
-	_, err := c.db.ExecContext(ctx, insertQuery, webhook, accessToken, teamID, channelID)
+func (c *Client) Create(ctx context.Context, accessToken string, teamID string, teamName string, webhook string, channelID string) error {
+	_, err := c.db.ExecContext(ctx, insertQuery, webhook, accessToken, teamID, channelID, teamName)
 	if err != nil {
 		return err
 	}

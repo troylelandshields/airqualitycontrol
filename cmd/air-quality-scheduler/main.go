@@ -1,11 +1,11 @@
 package main
 
 import (
-	"time"
 	"context"
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	_ "github.com/lib/pq"
 	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/airquaility"
