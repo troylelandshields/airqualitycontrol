@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"context"
 	"database/sql"
 	"fmt"
@@ -15,7 +16,14 @@ import (
 func main() {
 	airNowAPIKey := os.Getenv("AIR_NOW_API_KEY")
 
-	airQuality, err := airquaility.AirQuality("84094", airNowAPIKey)
+	defaultTZ, err := time.LoadLocation("America/Denver")
+	if err != nil {
+		fmt.Println("Couldn't load default location")
+		os.Exit(1)
+	}
+	t := time.Now().In(defaultTZ)
+
+	airQuality, err := airquaility.AirQuality("84094", airNowAPIKey, t)
 	if err != nil {
 		fmt.Println("error getting air quality", err)
 		os.Exit(1)

@@ -28,9 +28,9 @@ type airNowQuality struct {
 	ActionDay     bool
 }
 
-func AirQuality(zipCode string, apiKey string) (Summary, error) {
+func AirQuality(zipCode string, apiKey string, t time.Time) (Summary, error) {
 
-	url, err := buildURL(airNowBaseURL, zipCode, time.Now(), apiKey)
+	url, err := buildURL(airNowBaseURL, zipCode, t, apiKey)
 	if err != nil {
 		return Summary{}, err
 	}
