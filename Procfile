@@ -1,2 +1,2 @@
-web:  air-quality-api
+web: air-quality-api
 worker: air-quality-scheduler
