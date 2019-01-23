@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-api/handlers"
+	"github.com/troylelandshields/airqualitygovernor/webhooks"
 )
 
 func main() {
@@ -26,10 +27,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	slackClientID = os.Getenv("SLACK_CLIENT_ID")
-	slackClientSecret = os.Getenv("SLACK_CLIENT_SECRET")
+	slackClientID := os.Getenv("SLACK_CLIENT_ID")
+	slackClientSecret := os.Getenv("SLACK_CLIENT_SECRET")
 
-	handlers := handlers.New(slackClientID, slackClientSecret)
+	webhooksClient := webhooks.New(db)
+
+	handlers := handlers.New(slackClientID, slackClientSecret, webhooksClient)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/api/slack/redirect", handlers.AuthRedirect)

@@ -5,19 +5,20 @@ import (
 	"net/http"
 
 	"github.com/nlopes/slack"
+	"github.com/troylelandshields/airqualitygovernor/webhooks"
 )
 
-const ()
-
 type Handler struct {
-	clientID     string
-	clientSecret string
+	clientID       string
+	clientSecret   string
+	webhooksClient *webhooks.Client
 }
 
-func New(clientID string, clientSecret string) *Handler {
+func New(clientID string, clientSecret string, webhooksClient *webhooks.Client) *Handler {
 	return &Handler{
-		clientID:     clientID,
-		clientSecret: clientSecret,
+		clientID:       clientID,
+		clientSecret:   clientSecret,
+		webhooksClient: webhooksClient,
 	}
 }
 
@@ -33,4 +34,12 @@ func (h *Handler) AuthRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = h.webhooksClient.Create(ctx, resp.IncomingWebhook.URL)
+	if err != nil {
+		fmt.Println("error creating webhook", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
