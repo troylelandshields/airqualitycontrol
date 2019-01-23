@@ -1,31 +1,46 @@
 package main
 
 import (
+	"context"
+	"database/sql"
 	"fmt"
 	"os"
 
-	"gitlab.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/airquaility"
-	"gitlab.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/messenger"
-	"gitlab.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/webhooks"
-)
-
-const (
-	airNowAPIKey = "15EFF506-1A12-408C-AA60-AE4E95E83078"
+	_ "github.com/lib/pq"
+	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/airquaility"
+	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/messenger"
+	"github.com/troylelandshields/airqualitygovernor/webhooks"
 )
 
 func main() {
+	airNowAPIKey := os.Getenv("AIR_NOW_API_KEY")
+
 	airQuality, err := airquaility.AirQuality("84094", airNowAPIKey)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error getting air quality", err)
 		os.Exit(1)
 	}
 
 	if !airQuality.ShouldSend() {
-		fmt.Println("Done")
+		fmt.Println("Don't need to send a message")
 		os.Exit(0)
 	}
 
-	webhooks := webhooks.Webhooks()
+	connectionString := os.Getenv("DATABASE_URL")
+
+	db, err := connectDatabase(connectionString)
+	if err != nil {
+		fmt.Println("Error connecting to database", err)
+		os.Exit(1)
+	}
+
+	webhooksClient := webhooks.New(db)
+
+	webhooks, err := webhooksClient.Webhooks(context.Background())
+	if err != nil {
+		fmt.Println("Error getting webhooks", err)
+		os.Exit(1)
+	}
 
 	for _, w := range webhooks {
 		err = messenger.Send(w, airQuality.Message())
@@ -34,5 +49,14 @@ func main() {
 			os.Exit(1)
 		}
 	}
+}
 
+func connectDatabase(connectionString string) (*sql.DB, error) {
+
+	db, err := sql.Open("postgres", connectionString)
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }

@@ -7,12 +7,8 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/nlopes/slack"
-	"gitlab.com/troylelandshields/airqualitygovernor/cmd/air-quality-api/handlers"
-)
-
-var (
-	slackToken = ""
+	_ "github.com/lib/pq"
+	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-api/handlers"
 )
 
 func main() {
@@ -33,9 +29,7 @@ func main() {
 	slackClientID = os.Getenv("SLACK_CLIENT_ID")
 	slackClientSecret = os.Getenv("SLACK_CLIENT_SECRET")
 
-	api := slack.New(slackToken)
-
-	handlers := handlers.New()
+	handlers := handlers.New(slackClientID, slackClientSecret)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/api/slack/redirect", handlers.AuthRedirect)

@@ -14,7 +14,7 @@ type Handler struct {
 	clientSecret string
 }
 
-func New(clientID string, clientSecret string, redirectURI string) *Handler {
+func New(clientID string, clientSecret string) *Handler {
 	return &Handler{
 		clientID:     clientID,
 		clientSecret: clientSecret,
