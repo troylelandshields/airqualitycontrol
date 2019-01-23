@@ -8,6 +8,14 @@ import (
 	"github.com/troylelandshields/airqualitygovernor/webhooks"
 )
 
+const (
+	html = `
+	<html>
+		<body>
+			<p>Thank you!</p>
+		</body>
+	</html>`
+)
 type Handler struct {
 	clientID       string
 	clientSecret   string
@@ -42,4 +50,6 @@ func (h *Handler) AuthRedirect(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(html))
 }
+
