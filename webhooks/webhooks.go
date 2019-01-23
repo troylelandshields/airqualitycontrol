@@ -9,7 +9,7 @@ import (
 const (
 	allWebhooksQuery = "SELECT webhook FROM webhooks"
 
-	insertQuery = "INSERT INTO webhooks (webhook, access_token, team_id, channel_id) VALUES ($1, $2, $3, $4) ON CONFLICT team_id DO NOTHING"
+	insertQuery = "INSERT INTO webhooks (webhook, access_token, team_id, channel_id) VALUES ($1, $2, $3, $4) ON CONFLICT (team_id) DO NOTHING"
 )
 
 type Client struct {
