@@ -16,6 +16,7 @@ const (
 		</body>
 	</html>`
 )
+
 type Handler struct {
 	clientID       string
 	clientSecret   string
@@ -42,7 +43,7 @@ func (h *Handler) AuthRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.webhooksClient.Create(ctx, resp.IncomingWebhook.URL)
+	err = h.webhooksClient.Create(ctx, resp.AccessToken, resp.TeamID, resp.IncomingWebhook.URL, resp.IncomingWebhook.ChannelID)
 	if err != nil {
 		fmt.Println("error creating webhook", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -52,4 +53,3 @@ func (h *Handler) AuthRedirect(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(html))
 }
-
