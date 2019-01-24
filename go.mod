@@ -1,4 +1,4 @@
-module github.com/troylelandshields/airqualitygovernor
+module github.com/troylelandshields/airqualitycontrol
 
 require (
 	github.com/gorilla/context v1.1.1 // indirect

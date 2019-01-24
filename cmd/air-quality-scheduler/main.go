@@ -8,9 +8,9 @@ import (
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/airquaility"
-	"github.com/troylelandshields/airqualitygovernor/cmd/air-quality-scheduler/messenger"
-	"github.com/troylelandshields/airqualitygovernor/webhooks"
+	"github.com/troylelandshields/airqualitycontrol/cmd/air-quality-scheduler/airquaility"
+	"github.com/troylelandshields/airqualitycontrol/cmd/air-quality-scheduler/messenger"
+	"github.com/troylelandshields/airqualitycontrol/webhooks"
 )
 
 func main() {

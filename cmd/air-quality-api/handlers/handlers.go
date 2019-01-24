@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/nlopes/slack"
-	"github.com/troylelandshields/airqualitygovernor/webhooks"
+	"github.com/troylelandshields/airqualitycontrol/webhooks"
 )
 
 const (
