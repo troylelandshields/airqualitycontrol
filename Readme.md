@@ -2,7 +2,7 @@
 
 A simple Slack integration to update your team on mornings when air quality is poor to encourage carpooling and working from home as appropriate.
 
-Installation is quick and simple by clicking this button: 
+Installation is quick and simple by having your Slack admin click this button: 
 
 <a href="https://slack.com/oauth/authorize?client_id=334673942833.530364225924&scope=incoming-webhook"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
