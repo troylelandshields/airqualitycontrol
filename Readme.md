@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/6401893/51661128-24c07600-1f6d-11e9-88ea-032648f1101b.png">
+<img width="519" alt="airqual" src="https://user-images.githubusercontent.com/6401893/51783029-83fac380-20f0-11e9-82ff-1c8cd46e0415.png">
 
 A simple Slack integration to update your team on mornings when air quality is poor to encourage carpooling and working from home as appropriate.
 
