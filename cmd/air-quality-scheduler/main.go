@@ -23,6 +23,12 @@ func main() {
 	}
 	t := time.Now().In(defaultTZ)
 
+	switch t.Weekday() {
+	case time.Saturday, time.Sunday:
+		fmt.Println("enjoy the weekend")
+		os.Exit(0)
+	}
+
 	airQuality, err := airquaility.AirQuality("84094", airNowAPIKey, t)
 	if err != nil {
 		fmt.Println("error getting air quality", err)
@@ -53,8 +59,8 @@ func main() {
 	for _, w := range webhooks {
 		err = messenger.Send(w, airQuality.Message())
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			fmt.Println("error sending to webhook", w, err)
+			continue
 		}
 	}
 }
