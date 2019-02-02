@@ -35,6 +35,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	fmt.Println(airQuality.Message())
+
 	if !airQuality.ShouldSend() {
 		fmt.Println("Don't need to send a message")
 		os.Exit(0)

@@ -20,19 +20,27 @@ type Summary struct {
 	AirQualityLevel AirQualityLevel
 }
 
+const (
+	moreInfoURL = "http://cleartheairchallenge.org/"
+)
+
 func (s Summary) Message() string {
+	var msg string
+
 	switch s.AirQualityLevel {
 	case Good:
-		return "Air quality is good today, enjoy a nice day in the sun."
+		msg = "Air quality is good today, enjoy a nice day in the sun."
 	case Moderate, SomewhatUnhealthy:
-		return "The air quality today is fairly poor. Consider carpooling or taking public transit to work."
+		msg = "The air quality today is fairly poor. Consider carpooling or taking public transit to work."
 	case Unhealthy, VeryUnhealthy:
-		return "The air quality today is very poor. Please work from home if possible."
+		msg = "The air quality today is very poor. Please work from home if possible."
 	case Hazardous:
-		return "Air quality is as bad as it gets today. Avoid driving and work at home. Stay inside as much as you can."
+		msg = "Air quality is as bad as it gets today. Avoid driving and work at home. Stay inside as much as you can."
 	default:
-		return "Uh oh, air quality seems to be unknown."
+		msg = "Uh oh, air quality seems to be unknown."
 	}
+
+	return msg + " " + moreInfoURL
 }
 
 func (s Summary) ShouldSend() bool {
