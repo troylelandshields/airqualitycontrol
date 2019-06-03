@@ -59,7 +59,13 @@ func main() {
 	}
 
 	for _, w := range webhooks {
-		err = messenger.Send(w, airQuality.Message())
+		msg := airQuality.Message()
+
+		if w == "https://hooks.slack.com/services/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" {
+			msg += " @triston.whetten"
+		}
+
+		err = messenger.Send(w, msg)
 		if err != nil {
 			fmt.Println("error sending to webhook", w, err)
 			continue
